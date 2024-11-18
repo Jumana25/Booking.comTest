@@ -6,11 +6,19 @@ Feature: Test Booking.com
     Given I open url "https://www.booking.com/"
 
   @TestBooking
-  Scenario: Apply booking steps
+  Scenario Outline: Apply booking steps
     Given I search with filters
-      | Location      | Alexandria |
-      | CheckIn Date  | 2024-11-25 |
-      | CheckOut Date | 2024-12-05 |
-    And I check availability for hotel "Tolip Hotel Alexandria"
+      | Location      | Alexandria      |
+      | CheckIn Date  | <CheckIn Date>  |
+      | CheckOut Date | <CheckOut Date> |
+    And I check availability for hotel "<Hotel name>"
     And I go to next tab
-    And Select first offer available
+    When Select first offer available
+    Then Reservation details will be shown in confirmation page
+      | Hotel name    | <Hotel name>   |
+      | CheckIn Date  | <CheckIn Date>  |
+      | CheckOut Date | <CheckOut Date> |
+    Examples:
+      | Hotel name             | CheckIn Date | CheckOut Date |
+      | Tolip Hotel Alexandria | 2024-11-25   | 2024-12-05    |
+
