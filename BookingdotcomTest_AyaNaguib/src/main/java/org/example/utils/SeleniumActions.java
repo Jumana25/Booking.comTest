@@ -67,4 +67,8 @@ public class SeleniumActions extends BaseWebDriver {
         webDriverWait.withTimeout(Duration.ofSeconds(15)).until(webDriver -> ((JavascriptExecutor) webDriver).executeScript("return document.readyState").equals("complete"));
     }
 
+    public String getElementText(By element, int... timeout){
+        return waitForElementToBeDisplayed(element, getTimeout(timeout)).getText();
+    }
+
 }
